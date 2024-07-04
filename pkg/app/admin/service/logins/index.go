@@ -31,7 +31,6 @@ type LoginRequest struct {
 
 // 初始化
 func (p *Index) Init(ctx *builder.Context) interface{} {
-
 	// 登录页面Logo
 	p.Logo = false
 
@@ -42,7 +41,7 @@ func (p *Index) Init(ctx *builder.Context) interface{} {
 	p.SubTitle = "信息丰富的世界里，唯一稀缺的就是人类的注意力"
 
 	// 登录后跳转地址
-	p.Redirect = "/layout/index?api=/api/admin/dashboard/index/index"
+	p.Redirect = "/layout/index?api=/alert/api/admin/dashboard/index/index"
 
 	return p
 }
@@ -52,10 +51,10 @@ func (p *Index) Fields(ctx *builder.Context) []interface{} {
 	field := &resource.Field{}
 
 	// 获取验证码ID链接
-	captchaIdUrl := ctx.RouterPathToUrl("/api/admin/login/index/captchaId")
+	captchaIdUrl := ctx.RouterPathToUrl("/alert/api/admin/login/index/captchaId")
 
 	// 验证码链接
-	captchaUrl := ctx.RouterPathToUrl("/api/admin/login/index/captcha/:id")
+	captchaUrl := ctx.RouterPathToUrl("/alert/api/admin/login/index/captcha/:id")
 
 	return []interface{}{
 		field.Text("username").

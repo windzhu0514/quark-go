@@ -34,7 +34,6 @@ func (p *Template) Init(ctx *builder.Context) interface{} {
 
 // 初始化模板
 func (p *Template) TemplateInit(ctx *builder.Context) interface{} {
-
 	// 初始化数据对象
 	p.DB = db.Client
 
@@ -45,7 +44,7 @@ func (p *Template) TemplateInit(ctx *builder.Context) interface{} {
 	p.Title = "QuarkGo"
 
 	// 跳转地址
-	p.Redirect = "/layout/index?api=/api/admin/dashboard/index/index"
+	p.Redirect = "/layout/index?api=/alert/api/admin/dashboard/index/index"
 
 	// 子标题
 	p.SubTitle = "信息丰富的世界里，唯一稀缺的就是人类的注意力"
@@ -99,7 +98,6 @@ func (p *Template) GetSubTitle() string {
 
 // 验证码ID
 func (p *Template) CaptchaId(ctx *builder.Context) error {
-
 	return ctx.JSON(200, message.Success("操作成功", "", map[string]string{
 		"captchaId": captcha.NewLen(4),
 	}))
@@ -132,7 +130,6 @@ func (p *Template) Logout(ctx *builder.Context) error {
 
 // 包裹在组件内的创建页字段
 func (p *Template) FieldsWithinComponents(ctx *builder.Context) interface{} {
-
 	// 资源实例
 	template := ctx.Template.(Loginer)
 
@@ -184,7 +181,6 @@ func (p *Template) FormFieldsParser(ctx *builder.Context, fields interface{}) in
 					FieldByName("Component").
 					String()
 				if strings.Contains(component, "Field") {
-
 					// 判断是否在创建页面
 					if v, ok := v.(interface{ IsShownOnCreation() bool }); ok {
 						if v.IsShownOnCreation() {
@@ -214,9 +210,11 @@ func (p *Template) Render(ctx *builder.Context) error {
 
 	// 登录接口
 	loginApi := template.GetApi()
+	loginApi = "/alert" + loginApi
 
 	// 登录后跳转地址
 	redirect := template.GetRedirect()
+	// redirect = "/alert" + redirect
 
 	// Logo
 	logo := template.GetLogo()

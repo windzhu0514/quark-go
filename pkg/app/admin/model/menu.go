@@ -60,7 +60,6 @@ func (p *Menu) Seeder() {
 
 // 获取TreeSelect组件数据
 func (model *Menu) TreeSelect(root bool) (list []*treeselect.TreeData, Error error) {
-
 	// 是否有根节点
 	if root {
 		list = append(list, &treeselect.TreeData{
@@ -239,6 +238,8 @@ func (model *Menu) MenuParser(menus []*Menu) (menuList interface{}, Error error)
 		} else {
 			v.HideInMenu = true
 		}
+
+		v.Path = "/alert" + v.Path
 
 		if v.Type == 2 && v.IsEngine == 1 {
 			v.Path = "/layout/index?api=" + v.Path

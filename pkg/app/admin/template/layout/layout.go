@@ -39,7 +39,6 @@ func (p *Template) Init(ctx *builder.Context) interface{} {
 
 // 初始化模板
 func (p *Template) TemplateInit(ctx *builder.Context) interface{} {
-
 	// 初始化数据对象
 	p.DB = db.Client
 
@@ -124,7 +123,7 @@ func (p *Template) TemplateInit(ctx *builder.Context) interface{} {
 			SetStyle(map[string]interface{}{
 				"color": "rgb(0 0 0 / 88%)",
 			}).
-			SetApi("/api/admin/logout/index/handle").
+			SetApi("/alert/api/admin/logout/index/handle").
 			SetSize("small"),
 	}
 

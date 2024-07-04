@@ -2,6 +2,7 @@ package kratosadapter
 
 import (
 	stdhttp "net/http"
+	"net/url"
 	"strings"
 
 	"github.com/go-kratos/kratos/v2/transport/http"
@@ -11,9 +12,12 @@ import (
 // 适配kratos框架路由
 func RouteAdapter(b *builder.Engine, routePath string) http.HandlerFunc {
 	return func(ctx http.Context) error {
+		r := stripPrefix("/alert", ctx.Request())
 
 		// 转换Request对象
-		context := b.NewContext(ctx.Response(), ctx.Request())
+		context := b.NewContext(ctx.Response(), r)
+
+		routePath = strings.TrimPrefix(routePath, "/alert")
 
 		// 设置路由
 		context.SetFullPath(routePath)
@@ -22,9 +26,29 @@ func RouteAdapter(b *builder.Engine, routePath string) http.HandlerFunc {
 	}
 }
 
+func stripPrefix(prefix string, r *stdhttp.Request) *stdhttp.Request {
+	if prefix == "" {
+		return r
+	}
+
+	p := strings.TrimPrefix(r.URL.Path, prefix)
+	rp := strings.TrimPrefix(r.URL.RawPath, prefix)
+	if len(p) < len(r.URL.Path) && (r.URL.RawPath == "" || len(rp) < len(r.URL.RawPath)) {
+		r2 := new(stdhttp.Request)
+		*r2 = *r
+		r2.URL = new(url.URL)
+		*r2.URL = *r.URL
+		r2.URL.Path = p
+		r2.URL.RawPath = rp
+
+		return r2
+	}
+
+	return r
+}
+
 // 适配kratos框架
 func Adapter(b *builder.Engine, s *http.Server) {
-
 	// 获取注册的服务
 	routePaths := b.GetRoutePaths()
 
@@ -46,6 +70,9 @@ func Adapter(b *builder.Engine, s *http.Server) {
 
 			path = path + "/" + sv
 		}
+
+		path = strings.TrimPrefix(path, "/")
+		path = "/alert" + path
 
 		if v.Method == "Any" {
 			r.Handle(stdhttp.MethodGet, path, RouteAdapter(b, v.Path))

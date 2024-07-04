@@ -11,7 +11,6 @@ import (
 
 // 中间件
 func Handle(ctx *builder.Context) error {
-
 	// 获取登录实例
 	loginInstance := &logins.Index{}
 
