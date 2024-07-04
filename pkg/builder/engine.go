@@ -22,10 +22,10 @@ const (
 	AppName = "QuarkGo"
 
 	// 版本号
-	Version = "2.4.2"
+	Version = "2.3.0"
 
 	// 包名
-	PkgName = "github.com/quarkcloudio/quark-go/v2"
+	PkgName = "github.com/windzhu0514/quark-go/v2"
 )
 
 type Engine struct {
@@ -84,7 +84,6 @@ var AppConfig *Config
 
 // 初始化对象
 func New(config *Config) *Engine {
-
 	// 初始化应用配置
 	AppConfig = config
 

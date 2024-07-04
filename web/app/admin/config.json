@@ -1,7 +1,7 @@
 {
-  "host":"",
-  "api":{
-    "default":"/api/admin/login/index/index",
-    "layout": "/api/admin/layout/index/index"
+  "host": "",
+  "api": {
+    "default": "/alert/api/admin/login/index/index",
+    "layout": "/alert/api/admin/layout/index/index"
   }
 }
